@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ghk1;
+package ghk1.Client;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,15 +15,15 @@ import javax.swing.JOptionPane;
  *
  * @author PC
  */
-public class Cllient extends javax.swing.JFrame {
+public class Client extends javax.swing.JFrame {
 
     /**
-     * Creates new form Cllient
+     * Creates new form Client
      */
     
     private Socket client;
     
-    public Cllient() {
+    public Client() {
         initComponents();
         this.addressTextField.setText("127.0.0.1");
     }
@@ -68,9 +68,8 @@ public class Cllient extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(connectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(addressTextField)
-                        .addComponent(portTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)))
+                    .addComponent(addressTextField)
+                    .addComponent(portTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,9 +102,12 @@ public class Cllient extends javax.swing.JFrame {
                     try {
                         //To change body of generated methods, choose Tools | Templates.
                         client = new Socket(address,port);
+                        ClientSQLLoginUI loginSQLClient = new ClientSQLLoginUI(client);
+                        loginSQLClient.setVisible(true);
+                        Client.this.dispose();
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(null, "Khong the ket noi toi server");
-                        Logger.getLogger(Cllient.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }).start();
@@ -136,20 +138,21 @@ public class Cllient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cllient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cllient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cllient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cllient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cllient().setVisible(true);
+                new Client().setVisible(true);
             }
         });
     }
