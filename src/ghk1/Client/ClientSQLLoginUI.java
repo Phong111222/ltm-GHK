@@ -122,6 +122,7 @@ public class ClientSQLLoginUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void connectSqlBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectSqlBtnActionPerformed
@@ -136,7 +137,14 @@ public class ClientSQLLoginUI extends javax.swing.JFrame {
             dout.writeUTF(password);
             dout.writeUTF(port);
             dout.writeUTF(dbName);
-            JOptionPane.showMessageDialog(rootPane, din.readUTF());
+            if(din.readUTF().equalsIgnoreCase("Connect to SQL success")){
+                ClientDangKiThi dkThiForm = new ClientDangKiThi(client,Integer.parseInt(din.readUTF()));
+                dkThiForm.setVisible(true);
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Connect failed");
+            }
         } catch (IOException ex) {
             Logger.getLogger(ClientSQLLoginUI.class.getName()).log(Level.SEVERE, null, ex);
         }
