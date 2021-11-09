@@ -137,6 +137,9 @@ public class ClientDangKiThi extends javax.swing.JFrame {
             dout.writeUTF(hoTen);
             dout.writeUTF(sdt);
             JOptionPane.showMessageDialog(rootPane, din.readUTF());
+            ClientThiForm thi = new ClientThiForm(client, din, dout,maSinhVienMoi);
+            thi.setVisible(true);
+            this.dispose();
         } catch (IOException ex) {
             Logger.getLogger(ClientDangKiThi.class.getName()).log(Level.SEVERE, null, ex);
         }

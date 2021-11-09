@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,6 +6,7 @@
 package ghk1;
 
 import Thuchanh1.MyConnection;
+import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.*;
 import java.beans.Statement;
 import java.io.DataInputStream;
@@ -13,9 +14,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.Date;
 
 /**
  *
@@ -76,8 +80,8 @@ public class Server extends Thread {
                         String password = din.readUTF();
                         String port = din.readUTF();
                         String dbName = din.readUTF();
-                        JOptionPane.showMessageDialog(null, String.format("%s-%s-%s-%s", username, password, dbName, port));
                         connectSQL(port, dbName, username, password.trim());
+                        dout.writeUTF("Connect to SQL success");
                         try {
                             PreparedStatement ps = con.prepareStatement("SELECT * FROM SinhVien ORDER BY maSinhVien DESC LIMIT 1;");
                             ResultSet rs = ps.executeQuery();
@@ -122,6 +126,43 @@ public class Server extends Thread {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+                }
+                case "LOAD_CAUHOI":{
+                    try{
+                        PreparedStatement ps = con.prepareStatement(" SELECT * FROM thigk.bode order by RAND() limit 10 ");
+                        ResultSet rs = ps.executeQuery();
+                        while(rs.next()){
+                           String data = String.format("%s·%s·%s·%s·%s·%s·%s·%s","data",
+                                   rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6),rs.getString(7));
+                           
+                           dout.writeUTF(data);
+                        }
+                        dout.writeUTF("null-end");
+                        rs.close();
+                        ps.close();
+                        
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case "SAVE_DIEM":{
+                    try{
+                        String[] data = din.readUTF().split("-");
+                        String maSinhVien = data[0];
+                        String diem = data[1];
+                        SimpleDateFormat df = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
+                        Date currentTime = new Date();
+                        String dayString = df.format(currentTime);
+                        System.out.println(dayString);
+                        PreparedStatement ps = con.prepareStatement(String.format("INSERT INTO diem VALUE('%s','%s','%s')", dayString,diem, maSinhVien));
+                        ps.executeUpdate();
+                        ps.close();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
             }
