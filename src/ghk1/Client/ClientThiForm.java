@@ -5,7 +5,10 @@
  */
 package ghk1.Client;
 
+import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -72,6 +75,9 @@ public class ClientThiForm extends javax.swing.JFrame {
                 time = setInterval(timer);
                 System.out.println(time);
                 setTimeText(time);
+                if(time == 0){
+                    nopBaiAction();
+                }
                 //dongHoTextField.setText(""+time);
             }
         }, 1000, 1000);
@@ -358,6 +364,12 @@ public class ClientThiForm extends javax.swing.JFrame {
     }//GEN-LAST:event_dongHoTextFieldActionPerformed
 
     private void nopBaiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nopBaiBtnActionPerformed
+
+       nopBaiAction();
+        
+    }//GEN-LAST:event_nopBaiBtnActionPerformed
+
+    private void nopBaiAction(){
         try {
             // TODO add your handling code here:
             String result = "";
@@ -391,10 +403,7 @@ public class ClientThiForm extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ClientThiForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_nopBaiBtnActionPerformed
-
-    
+    }
     
     private void cauhoi2RadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cauhoi2RadioActionPerformed
         // TODO add your handling code here:
