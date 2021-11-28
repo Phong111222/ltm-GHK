@@ -97,13 +97,13 @@ public class Server extends Thread {
                                 dout.writeUTF(result);
                             }
                         } catch (SQLException ex) {
-                            dout.writeUTF("Loi con me m");
+                            dout.writeUTF("Eror Login SQL "+ ex.getMessage());
                             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     } catch (Exception ex) {
                         try {
-                            dout.writeUTF("Loi r con di");
+                            dout.writeUTF("Error Login SQL"+ ex.getMessage());
                         } catch (IOException ex1) {
                             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
                         }

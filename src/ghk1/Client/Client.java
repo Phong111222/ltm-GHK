@@ -5,6 +5,7 @@
  */
 package ghk1.Client;
 
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -149,7 +150,12 @@ public class Client extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+            EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Client().setVisible(true);//To change body of generated methods, choose Tools | Templates.
+            }
+            });
         /* Create and display the form */
        
     }
