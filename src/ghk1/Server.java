@@ -47,7 +47,6 @@ public class Server extends Thread {
             client = server.accept();
             din = new DataInputStream((client.getInputStream()));
             dout = new DataOutputStream(client.getOutputStream());
-            JOptionPane.showMessageDialog(null, "Client connected !!");
             System.out.println("Client da ket noi");
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +117,6 @@ public class Server extends Thread {
                         try {
                             PreparedStatement ps = con.prepareStatement(String.format("INSERT INTO SinhVien VALUES(NULL,'%s','%s')", hoten, sdt));
                             ps.executeUpdate();
-                            dout.writeUTF("Luu sinh vien thanh cong");
                         } catch (SQLException ex) {
                             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -129,15 +127,16 @@ public class Server extends Thread {
                 }
                 case "LOAD_CAUHOI":{
                     try{
-                        PreparedStatement ps = con.prepareStatement(" SELECT * FROM thigk.bode order by RAND() limit 10 ");
+                        PreparedStatement ps = con.prepareStatement("SELECT * FROM thigk.bode order by RAND() limit 10 ");
                         ResultSet rs = ps.executeQuery();
                         while(rs.next()){
                            String data = String.format("%s·%s·%s·%s·%s·%s·%s·%s","data",
                                    rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6),rs.getString(7));
-                           
+                           System.out.println("Data receive: " + data);
                            dout.writeUTF(data);
                         }
                         dout.writeUTF("null-end");
+                        
                         rs.close();
                         ps.close();
                         

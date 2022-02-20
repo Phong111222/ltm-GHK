@@ -50,6 +50,7 @@ public class ClientThiForm extends javax.swing.JFrame {
     private int maSinhVien;
     private ArrayList<BoDe> listCauHoi = new ArrayList();
     private ArrayList<String> listDapAn = new ArrayList();
+    private static Timer timerCountDown;
 
     public ClientThiForm(Socket client, DataInputStream din, DataOutputStream dout, int maSinhVien) {
         initComponents();
@@ -58,21 +59,28 @@ public class ClientThiForm extends javax.swing.JFrame {
         this.dout = dout;
         this.maSinhVien = maSinhVien; 
         this.dongHoTextField.setText("10");
-        countTime(300);
-        loadDanhSachCauHoi();
-        cauhoi1Radio.setSelected(true);
-        loadCauHoi(0);
-        loadMaCauHoi();
+        try{
+            loadDanhSachCauHoi();
+            cauhoi1Radio.setSelected(true);
+            System.out.println("So luong cau hoi: " + listCauHoi.size());
+            loadCauHoi(0);
+            loadMaCauHoi();
+            countTime(300);
+        } catch(Exception e){
+            System.out.println("So luong cau hoi: " + listCauHoi.size());
+            e.printStackTrace();
+            this.dispose();
+        }
     }
 
     public void countTime(int timeInput) {
-        Timer timer = new Timer();
+        timerCountDown = new Timer();
         this.time = timeInput;
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timerCountDown.scheduleAtFixedRate(new TimerTask() {
 
             @Override
             public void run() {
-                time = setInterval(timer);
+                time = setInterval(timerCountDown);
                 System.out.println(time);
                 setTimeText(time);
                 if(time == 0){
@@ -107,7 +115,9 @@ public class ClientThiForm extends javax.swing.JFrame {
             dout.writeUTF("LOAD_CAUHOI");
             Vector list = null;
             while(true){
-                String[] data = din.readUTF().split("·");
+                String dataRead = din.readUTF();
+                System.out.println(dataRead);
+                String[] data = dataRead.split("·");
                 if(!data[0].equalsIgnoreCase("data")){
                     break;
                 }
@@ -117,6 +127,7 @@ public class ClientThiForm extends javax.swing.JFrame {
                 
             }
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ClientThiForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -372,6 +383,7 @@ public class ClientThiForm extends javax.swing.JFrame {
     private void nopBaiAction(){
         try {
             // TODO add your handling code here:
+            timerCountDown.cancel();
             String result = "";
             int diem = 0;
             for(String x: listDapAn){
@@ -587,7 +599,6 @@ public class ClientThiForm extends javax.swing.JFrame {
                 break;
             }
             case "C":{
-                System.out.println("this shit must run");
                 cRadio.setSelected(true);
                 break;
             }

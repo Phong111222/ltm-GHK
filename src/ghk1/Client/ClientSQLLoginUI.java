@@ -49,12 +49,12 @@ public class ClientSQLLoginUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         usernameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        passwordTextField = new javax.swing.JTextField();
         connectSqlBtn = new javax.swing.JButton();
         portLabel = new javax.swing.JLabel();
         dbTextLabel = new javax.swing.JLabel();
         portTextField = new javax.swing.JTextField();
         dbNameTextField = new javax.swing.JTextField();
+        passwordTextField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,8 +106,8 @@ public class ClientSQLLoginUI extends javax.swing.JFrame {
                     .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(portLabel)
@@ -191,7 +191,7 @@ public class ClientSQLLoginUI extends javax.swing.JFrame {
     private javax.swing.JLabel dbTextLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField passwordTextField;
+    private javax.swing.JPasswordField passwordTextField;
     private javax.swing.JLabel portLabel;
     private javax.swing.JTextField portTextField;
     private javax.swing.JTextField usernameTextField;
